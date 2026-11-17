@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KlimaTor by Tech.chebur Pro — Turnkey Smart Home Systems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0ea5e9',
+            secondary: '#10b981',
+            dark: '#0b111e',
+            card: '#131c31'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .hero-bg {
+      background: radial-gradient(circle at top right, #1e3a8a, #0b111e 70%);
+    }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .accordion-content.active { max-height: 220px; padding-bottom: 1rem; }
+    .accordion-icon { transition: transform 0.3s ease; }
+    .accordion-icon.rotate { transform: rotate(180deg); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+  <!-- HEADER -->
+  <header class="bg-dark/95 backdrop-blur text-white py-4 sticky top-0 z-50 border-b border-slate-800">
+    <nav class="container mx-auto flex justify-between items-center px-4">
+      <a href="#" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 grid place-items-center font-extrabold text-sm">KT</span>
+        <div>
+          <span class="text-xl font-bold tracking-tight">KlimaTor</span>
+          <span class="block text-[11px] text-slate-400 -mt-1">by Tech.chebur Pro</span>
+        </div>
+      </a>
+
+      <ul id="nav-menu" class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+        <li><a href="#live-demo" class="text-sky-400 hover:text-sky-300 font-semibold">Live Demo</a></li>
+        <li><a href="#services" class="hover:text-white transition">Services</a></li>
+        <li><a href="#packages" class="hover:text-white transition">Packages</a></li>
+        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+        <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+        <li>
+          <a href="panel.html" class="bg-primary hover:bg-sky-600 text-white font-semibold px-4 py-2 rounded-lg transition">
+            Open Control Panel →
+          </a>
+        </li>
+      </ul>
+
+      <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none">☰</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-bg text-white py-20 px-4">
+    <div class="container mx-auto max-w-5xl text-center">
+      <span class="inline-block bg-sky-500/20 text-sky-300 border border-sky-500/30 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-5">
+        Turnkey Smart Home • Local & Cloud Control
+      </span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+        Make Your Home Smarter with <span class="text-sky-400">KlimaTor OS</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+        Heating automation, motorized blinds, PIN-secured smart locks, and real-time energy monitoring in one unified interface.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="panel.html" class="bg-primary hover:bg-sky-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+          Launch Fullscreen Control Panel
+        </a>
+        <a href="#contact" class="bg-secondary hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+          Get a Free Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMBEDDED INTERACTIVE LIVE DEMO -->
+  <section id="live-demo" class="py-16 bg-slate-900 text-white px-4">
+    <div class="container mx-auto max-w-6xl">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div>
+          <span class="text-sky-400 font-semibold text-sm uppercase tracking-wider">Interactive Showcase</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-1">Try KlimaTor Dashboard Live</h2>
+          <p class="text-slate-400 mt-2">Test scenarios, adjust room temperature, move blinds, or unlock the front door (Demo PIN: <strong class="text-white">1234</strong>).</p>
+        </div>
+        <a href="panel.html" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400 font-semibold px-5 py-3 rounded-xl transition">
+          Fullscreen Mode ↗
+        </a>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden border-2 border-slate-700 shadow-2xl bg-[#0b111e]">
+        <iframe src="panel.html" title="KlimaTor OS Live Demo" class="w-full h-[760px] border-0"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM & SOLUTION -->
+  <section class="py-16 bg-white px-4">
+    <div class="container mx-auto max-w-5xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12">Tired of Everyday Household Hassles?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="p-6 rounded-2xl shadow-md bg-slate-50 border border-slate-100">
+          <div class="text-4xl mb-4">💡</div>
+          <h3 class="text-xl font-bold mb-2">High Heating & Power Bills?</h3>
+          <p class="text-slate-600">Smart radiator thermostats and standby cutoffs lower energy consumption automatically.</p>
+        </div>
+        <div class="p-6 rounded-2xl shadow-md bg-slate-50 border border-slate-100">
+          <div class="text-4xl mb-4">🛡️</div>
+          <h3 class="text-xl font-bold mb-2">Worried About Security?</h3>
+          <p class="text-slate-600">PIN-protected locks, door/window sensors, and instant mobile alerts keep you in control.</p>
+        </div>
+        <div class="p-6 rounded-2xl shadow-md bg-slate-50 border border-slate-100">
+          <div class="text-4xl mb-4">🎛️</div>
+          <h3 class="text-xl font-bold mb-2">Too Many Separate Apps?</h3>
+          <p class="text-slate-600">KlimaTor unifies Home Assistant, Zigbee, and Wi-Fi devices into one clean dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-16 bg-slate-50 px-4">
+    <div class="container mx-auto max-w-6xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12">Turnkey Smart Home Solutions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">🌡️</div>
+          <h3 class="text-xl font-bold mb-2">Climate & Heating Control</h3>
+          <p class="text-slate-600">Room-by-room radiator valve automation with Eco, Comfort, and Night schedules.</p>
+        </div>
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">🪟</div>
+          <h3 class="text-xl font-bold mb-2">Smart Blinds & Shutters</h3>
+          <p class="text-slate-600">Precise 0–100% position control by sun schedule, temperature, or single tap.</p>
+        </div>
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">🔒</div>
+          <h3 class="text-xl font-bold mb-2">Access & Perimeter Security</h3>
+          <p class="text-slate-600">Smart door locks with PIN confirmation, leak detectors, and window contact sensors.</p>
+        </div>
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">💡</div>
+          <h3 class="text-xl font-bold mb-2">Adaptive Lighting</h3>
+          <p class="text-slate-600">Dimmable scenes for morning, work, evening relaxation, and away presence simulation.</p>
+        </div>
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">⚡</div>
+          <h3 class="text-xl font-bold mb-2">Live Energy Monitoring</h3>
+          <p class="text-slate-600">Real-time Wattage tracking and monthly Euro cost forecasts based on your tariff.</p>
+        </div>
+        <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100">
+          <div class="text-3xl mb-4">🌐</div>
+          <h3 class="text-xl font-bold mb-2">Local & Cloud Gateway</h3>
+          <p class="text-slate-600">Works locally without internet or remotely via encrypted WSS bridge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="packages" class="py-16 bg-white px-4">
+    <div class="container mx-auto max-w-6xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12">Choose Your Smart Home Package</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-slate-50 p-8 rounded-2xl shadow-md border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-2xl font-bold text-primary mb-3">Basic</h3>
+            <p class="text-slate-600 mb-6">Ideal for apartments. Smart lighting and essential security sensors.</p>
+            <ul class="text-left text-slate-700 mb-6 space-y-2 text-sm">
+              <li><span class="text-secondary font-bold mr-2">✓</span> Smart lighting (2 zones)</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Door/window sensors (3 pcs)</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Central hub + KlimaTor UI</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Mobile PWA access</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-4xl font-extrabold text-slate-900 mb-6">from €599</p>
+            <a href="#contact" class="block bg-primary hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full transition">Order Basic</a>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-8 rounded-2xl shadow-xl border-2 border-secondary flex flex-col justify-between">
+          <div>
+            <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mb-2">MOST POPULAR</span>
+            <h3 class="text-2xl font-bold text-secondary mb-3">Advanced</h3>
+            <p class="text-slate-600 mb-6">Complete comfort, heating automation, and leak protection.</p>
+            <ul class="text-left text-slate-700 mb-6 space-y-2 text-sm">
+              <li><span class="text-secondary font-bold mr-2">✓</span> Everything in "Basic"</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Climate & radiator control (3 zones)</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Smart door lock integration</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Water leak sensors (2 pcs)</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> One-tap Home / Away / Night scenes</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-4xl font-extrabold text-slate-900 mb-6">from €1,499</p>
+            <a href="#contact" class="block bg-secondary hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-full transition">Order Advanced</a>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-8 rounded-2xl shadow-md border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-2xl font-bold text-primary mb-3">Premium</h3>
+            <p class="text-slate-600 mb-6">Full-house automation, motorized blinds, and energy analytics.</p>
+            <ul class="text-left text-slate-700 mb-6 space-y-2 text-sm">
+              <li><span class="text-secondary font-bold mr-2">✓</span> Everything in "Advanced"</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Motorized blinds/shutters (up to 5)</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Whole-home energy metering</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Encrypted Cloud remote access</li>
+              <li><span class="text-secondary font-bold mr-2">✓</span> Priority technical support</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-4xl font-extrabold text-slate-900 mb-6">from €2,999</p>
+            <a href="#contact" class="block bg-primary hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full transition">Order Premium</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSTANT PACKAGE ADVISOR -->
+      <div class="mt-14 bg-slate-900 text-white p-8 rounded-2xl max-w-2xl mx-auto shadow-lg">
+        <h3 class="text-2xl font-bold mb-3">Not sure which package fits your home?</h3>
+        <p class="text-slate-300 mb-6">Describe your home and priorities — our assistant will recommend the right setup immediately.</p>
+        <button id="open-recommendation-modal" class="bg-secondary hover:bg-emerald-600 text-white font-bold py-3 px-7 rounded-full transition transform hover:scale-105">
+          ✨ Find My Package
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-16 bg-slate-50 px-4">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-10">Frequently Asked Questions</h2>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 divide-y divide-slate-200">
+        <div class="py-3">
+          <div class="accordion-header cursor-pointer flex justify-between items-center font-bold py-2">
+            <span>Do I need to renovate my home for installation?</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content text-slate-600">
+            <p>No. Modern Zigbee and Wi-Fi smart radiator thermostats, relays, and sensors install cleanly without tearing down walls.</p>
+          </div>
+        </div>
+        <div class="py-3">
+          <div class="accordion-header cursor-pointer flex justify-between items-center font-bold py-2">
+            <span>Does KlimaTor work if the internet goes down?</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content text-slate-600">
+            <p>Yes. In Local Gateway mode, KlimaTor communicates directly with your local hub over your home network.</p>
+          </div>
+        </div>
+        <div class="py-3">
+          <div class="accordion-header cursor-pointer flex justify-between items-center font-bold py-2">
+            <span>Can installers or developers license the KlimaTor UI?</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content text-slate-600">
+            <p>Yes, KlimaTor supports custom branding and connects directly to Home Assistant REST API or MQTT/WebSocket bridges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-16 bg-white px-4">
+    <div class="container mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Start Living Smarter Today</h2>
+      <p class="text-slate-600 mb-8">Leave a request for a free consultation or white-label license inquiry.</p>
+      <form id="contact-form" class="bg-slate-50 p-8 rounded-2xl shadow-md border border-slate-200 text-left space-y-4">
+        <div>
+          <label class="block text-sm font-bold mb-1">Your Name</label>
+          <input type="text" required class="w-full border border-slate-300 rounded-xl py-3 px-4 focus:outline-none focus:border-primary" placeholder="Max Mustermann" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Phone / WhatsApp (+49)</label>
+          <input type="tel" required class="w-full border border-slate-300 rounded-xl py-3 px-4 focus:outline-none focus:border-primary" placeholder="+49 176 12345678" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Your Wishes or Questions</label>
+          <textarea rows="3" class="w-full border border-slate-300 rounded-xl py-3 px-4 focus:outline-none focus:border-primary" placeholder="Apartment / house, heating control, shutters, security..."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-primary hover:bg-sky-600 text-white font-bold py-3.5 px-8 rounded-full transition shadow-md">
+          Send Request
+        </button>
+      </form>
+      <div id="form-success-msg" class="hidden mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-xl font-semibold">
+        Thank you! Your request has been received. We will contact you shortly.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark text-slate-400 py-8 px-4 text-center text-sm">
+    <p class="text-white font-semibold mb-2">KlimaTor — Smart Home Solutions by Tech.chebur Pro</p>
+    <p class="mb-3">
+      <a href="tel:+49017661566343" class="hover:text-white">+49 0176 61566343</a> •
+      <a href="mailto:tech.chebur@gmail.com" class="hover:text-white">tech.chebur@gmail.com</a>
+    </p>
+    <p>© 2026 Tech.chebur.Shop. All rights reserved.</p>
+  </footer>
+
+  <!-- MODAL: PACKAGE ADVISOR -->
+  <div id="recommendation-modal" class="hidden fixed inset-0 bg-black/70 z-50 grid place-items-center p-4">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+      <button id="close-recommendation-modal" class="absolute top-4 right-5 text-2xl text-slate-400 hover:text-slate-700">×</button>
+      <h3 class="text-xl font-bold mb-2">Find Your Ideal Package ✨</h3>
+      <p class="text-sm text-slate-600 mb-4">Tell us what matters most (e.g., "save heating costs", "blinds and full house", "basic apartment security"):</p>
+      <textarea id="user-needs" rows="4" class="w-full border border-slate-300 rounded-xl p-3 mb-4 focus:outline-none focus:border-primary" placeholder="Type your requirements here..."></textarea>
+      <button id="get-package-recommendation-button" class="w-full bg-secondary hover:bg-emerald-600 text-white font-bold py-3 rounded-full transition">
+        Analyze & Recommend
+      </button>
+      <div id="recommendation-result" class="hidden mt-4 p-4 bg-slate-100 rounded-xl text-sm">
+        <p class="font-bold text-slate-900 mb-1">Recommended Package:</p>
+        <p id="package-recommendation-text" class="text-slate-700"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const m = document.getElementById('nav-menu');
+      m.classList.toggle('hidden');
+      m.classList.toggle('flex');
+      m.classList.toggle('flex-col');
+      m.classList.toggle('absolute');
+      m.classList.toggle('top-full');
+      m.classList.toggle('left-0');
+      m.classList.toggle('w-full');
+      m.classList.toggle('bg-dark');
+      m.classList.toggle('p-4');
+      m.classList.toggle('space-y-3');
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('.accordion-icon');
+        content.classList.toggle('active');
+        icon.classList.toggle('rotate');
+      });
+    });
+
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.target.reset();
+      const msg = document.getElementById('form-success-msg');
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 5000);
+    });
+
+    // Local Smart Package Advisor (Zero external API keys needed)
+    const modal = document.getElementById('recommendation-modal');
+    document.getElementById('open-recommendation-modal').addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      document.getElementById('recommendation-result').classList.add('hidden');
+    });
+    document.getElementById('close-recommendation-modal').addEventListener('click', () => modal.classList.add('hidden'));
+
+    document.getElementById('get-package-recommendation-button').addEventListener('click', () => {
+      const text = document.getElementById('user-needs').value.toLowerCase();
+      const resBox = document.getElementById('recommendation-result');
+      const resText = document.getElementById('package-recommendation-text');
+      resBox.classList.remove('hidden');
+
+      if (!text.trim()) {
+        resText.textContent = "Please enter a few words about your home or goals first.";
+        return;
+      }
+
+      if (text.includes('blind') || text.includes('shutter') || text.includes('штор') || text.includes('roll') || text.includes('full') || text.includes('house') || text.includes('дом')) {
+        resText.innerHTML = "<strong>Premium (from €2,999)</strong> — Best for full houses and motorized blinds/shutters, complete energy analytics, and cloud remote access.";
+      } else if (text.includes('heat') || text.includes('climate') || text.includes('отопл') || text.includes('климат') || text.includes('heiz') || text.includes('lock') || text.includes('замок') || text.includes('leak')) {
+        resText.innerHTML = "<strong>Advanced (from €1,499)</strong> — Ideal for cutting heating costs with smart radiator valves, door lock PIN security, and leak sensors.";
+      } else {
+        resText.innerHTML = "<strong>Basic (from €599)</strong> — Great starting point for apartments with smart lighting zones, door/window sensors, and KlimaTor mobile control.";
+      }
+    });
+  </script>
+</body>
+</html>
