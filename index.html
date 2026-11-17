@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KlimaTor — Smart Home Control Panel</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo-badge">KT</div>
+        <div>
+          <h1 id="brandTitle">KlimaTor</h1>
+          <span class="subtitle">by chebur.shop</span>
+        </div>
+      </div>
+
+      <div class="topbar-controls">
+        <div id="connectionBadge" class="status-badge demo">
+          <span class="dot"></span>
+          <span id="connectionText">DEMO MODE</span>
+        </div>
+
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="de">DE</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+        </div>
+
+        <button id="openSettingsBtn" class="icon-btn" title="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- SCENARIOS -->
+    <section class="scenarios-bar">
+      <span class="section-label" data-i18n="scenarios">Szenarien:</span>
+      <div class="scenario-buttons">
+        <button class="scenario-btn" data-scene="home">🏠 <span data-i18n="sceneHome">Zuhause</span></button>
+        <button class="scenario-btn" data-scene="away">🔒 <span data-i18n="sceneAway">Abwesend</span></button>
+        <button class="scenario-btn" data-scene="night">🌙 <span data-i18n="sceneNight">Nacht</span></button>
+      </div>
+    </section>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <main class="dashboard-grid">
+      <!-- 1. CLIMATE & HEATING -->
+      <article class="card">
+        <div class="card-header">
+          <h2>🌡️ <span data-i18n="climateTitle">Klima & Heizung</span></h2>
+          <span class="badge-pill" id="climateModeLabel">Komfort</span>
+        </div>
+
+        <div class="climate-readout">
+          <div class="big-temp"><span id="targetTemp">21.5</span>°C</div>
+          <div class="sub-metrics">
+            <div><span data-i18n="currentTemp">Aktuell</span>: <strong id="currentTemp">21.0°C</strong></div>
+            <div><span data-i18n="humidity">Luftfeuchte</span>: <strong id="humidityVal">48%</strong></div>
+          </div>
+        </div>
+
+        <input type="range" id="tempSlider" min="15" max="28" step="0.5" value="21.5" class="slider" />
+
+        <div class="mode-group">
+          <button class="mode-btn" data-hmode="eco">Eco (18°)</button>
+          <button class="mode-btn active" data-hmode="comfort">Komfort (21.5°)</button>
+          <button class="mode-btn" data-hmode="night">Nacht (19°)</button>
+        </div>
+      </article>
+
+      <!-- 2. BLINDS / SHUTTERS -->
+      <article class="card">
+        <div class="card-header">
+          <h2>🪟 <span data-i18n="blindsTitle">Rollläden & Jalousien</span></h2>
+          <span class="badge-pill"><span id="blindPercent">35</span>%</span>
+        </div>
+
+        <div class="blind-visual">
+          <div class="window-frame">
+            <div class="blind-curtain" id="blindCurtain" style="height: 35%;"></div>
+            <span class="window-label" data-i18n="livingRoom">Wohnzimmer</span>
+          </div>
+        </div>
+
+        <input type="range" id="blindSlider" min="0" max="100" step="5" value="35" class="slider" />
+
+        <div class="mode-group">
+          <button class="mode-btn" id="blindOpenBtn" data-i18n="open">Öffnen (0%)</button>
+          <button class="mode-btn" id="blindHalfBtn">50%</button>
+          <button class="mode-btn" id="blindCloseBtn" data-i18n="close">Schließen (100%)</button>
+        </div>
+      </article>
+
+      <!-- 3. ACCESS & SECURITY -->
+      <article class="card">
+        <div class="card-header">
+          <h2>🛡️ <span data-i18n="securityTitle">Zugang & Sicherheit</span></h2>
+          <span class="badge-pill secure" id="lockStatusBadge" data-i18n="locked">Verriegelt</span>
+        </div>
+
+        <div class="security-box">
+          <div class="lock-icon" id="lockIcon">🔒</div>
+          <p class="lock-desc" id="lockDesc" data-i18n="lockProtected">Haustür gesichert (PIN erforderlich)</p>
+          <button id="toggleLockBtn" class="primary-btn danger" data-i18n="unlockBtn">Tür entriegeln</button>
+        </div>
+
+        <div class="sensors-row">
+          <div class="sensor-chip">🚪 <span data-i18n="frontDoor">Haustür</span>: <strong id="doorSensor">OK</strong></div>
+          <div class="sensor-chip">🪟 <span data-i18n="bedroomWin">Fenster</span>: <strong id="winSensor">OK</strong></div>
+        </div>
+      </article>
+
+      <!-- 4. LIGHTS & ENERGY -->
+      <article class="card">
+        <div class="card-header">
+          <h2>💡 <span data-i18n="energyTitle">Licht & Energie</span></h2>
+          <label class="switch">
+            <input type="checkbox" id="lightToggle" checked />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="energy-metrics">
+          <div class="metric-box">
+            <span class="metric-label" data-i18n="livePower">Aktuelle Leistung</span>
+            <strong class="metric-val" id="powerWatts">340 W</strong>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label" data-i18n="estMonth">Prognose / Monat</span>
+            <strong class="metric-val accent" id="monthlyEuro">85.68 €</strong>
+          </div>
+        </div>
+
+        <div class="dimmer-row">
+          <span data-i18n="brightness">Helligkeit</span>: <strong id="dimmerVal">75%</strong>
+          <input type="range" id="dimmerSlider" min="10" max="100" step="5" value="75" class="slider" />
+        </div>
+      </article>
+    </main>
+
+    <!-- EVENT LOG -->
+    <section class="card log-card">
+      <div class="card-header">
+        <h2>📋 <span data-i18n="eventLog">Ereignisprotokoll</span></h2>
+        <button id="clearLogBtn" class="text-btn" data-i18n="clear">Leeren</button>
+      </div>
+      <ul id="eventLogList" class="log-list"></ul>
+    </section>
+  </div>
+
+  <!-- MODAL: SETTINGS (MODE & GATEWAY) -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 data-i18n="settingsTitle">System- & Gateway-Einstellungen</h3>
+        <button class="close-modal" data-close="settingsModal">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="projectName">Objekt- / Markenname</label>
+        <input type="text" id="cfgBrandName" value="KlimaTor" />
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="opMode">Betriebsmodus</label>
+        <select id="cfgMode">
+          <option value="demo">Demo / Simulation (Showcase)</option>
+          <option value="local">Local Gateway (Home Assistant REST API)</option>
+          <option value="cloud">Cloud Bridge (WSS / Hetzner VPS)</option>
+        </select>
+      </div>
+
+      <div id="gatewayFields" class="gateway-fields hidden">
+        <div class="form-group">
+          <label>Gateway URL (IP / Domain)</label>
+          <input type="text" id="cfgUrl" placeholder="http://192.168.1.50:8123" />
+        </div>
+        <div class="form-group">
+          <label>API Token / Auth Key</label>
+          <input type="password" id="cfgToken" placeholder="Bearer token..." />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="tariffLabel">Strompreis (€ / kWh)</label>
+        <input type="number" id="cfgTariff" step="0.01" value="0.35" />
+      </div>
+
+      <div class="modal-actions">
+        <button id="saveSettingsBtn" class="primary-btn" data-i18n="save">Speichern</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PIN FOR DOOR LOCK -->
+  <div id="pinModal" class="modal hidden">
+    <div class="modal-content small">
+      <div class="modal-header">
+        <h3 data-i18n="enterPin">Sicherheits-PIN eingeben</h3>
+        <button class="close-modal" data-close="pinModal">✕</button>
+      </div>
+      <p class="hint-text" data-i18n="pinHint">Standard-Demo-PIN: 1234</p>
+      <input type="password" id="pinInput" maxlength="6" placeholder="••••" class="pin-input" />
+      <p id="pinError" class="error-text hidden" data-i18n="wrongPin">Falscher PIN-Code!</p>
+      <div class="modal-actions">
+        <button id="confirmPinBtn" class="primary-btn" data-i18n="confirm">Bestätigen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/driver.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
