@@ -171,18 +171,31 @@
         <select id="cfgMode">
           <option value="demo">Demo / Simulation (Showcase)</option>
           <option value="local">Local Gateway (Home Assistant REST API)</option>
-          <option value="cloud">Cloud Bridge (WSS / Hetzner VPS)</option>
+          <option value="cloud">Cloud Bridge (Secure WSS / Remote Server)</option>
+          <option value="tuya">Tuya / Smart Life Cloud Bridge</option>
         </select>
       </div>
 
       <div id="gatewayFields" class="gateway-fields hidden">
         <div class="form-group">
-          <label>Gateway URL (IP / Domain)</label>
-          <input type="text" id="cfgUrl" placeholder="http://192.168.1.50:8123" />
+          <label>Gateway / Bridge URL (HTTPS)</label>
+          <input type="text" id="cfgUrl" placeholder="https://xxxxx.lhr.life" />
         </div>
         <div class="form-group">
           <label>API Token / Auth Key</label>
           <input type="password" id="cfgToken" placeholder="Bearer token..." />
+        </div>
+      </div>
+
+      <!-- ПОЛЯ ДЛЯ TUYA ЛАМПЫ -->
+      <div id="tuyaFields" class="gateway-fields hidden">
+        <div class="form-group">
+          <label>Tuya Bridge URL (HTTPS Tunnel / Server)</label>
+          <input type="text" id="cfgTuyaUrl" placeholder="https://xxxxx.lhr.life" />
+        </div>
+        <div class="form-group">
+          <label>Smart Lamp Device ID (из iot.tuya.com)</label>
+          <input type="text" id="cfgTuyaDeviceId" placeholder="bf83a912c4e5..." />
         </div>
       </div>
 
@@ -217,5 +230,114 @@
   <script src="js/config.js"></script>
   <script src="js/driver.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- ВСТРОЕННЫЙ ДРАЙВЕР TUYA / SMART LIFE -->
+  <script>
+    (function () {
+      const cfgMode = document.getElementById("cfgMode");
+      const gatewayFields = document.getElementById("gatewayFields");
+      const tuyaFields = document.getElementById("tuyaFields");
+      const cfgTuyaUrl = document.getElementById("cfgTuyaUrl");
+      const cfgTuyaDeviceId = document.getElementById("cfgTuyaDeviceId");
+      const saveBtn = document.getElementById("saveSettingsBtn");
+      const lightToggle = document.getElementById("lightToggle");
+      const dimmerSlider = document.getElementById("dimmerSlider");
+      const connText = document.getElementById("connectionText");
+      const logList = document.getElementById("eventLogList");
+
+      function addLog(msg) {
+        if (!logList) return;
+        const li = document.createElement("li");
+        const time = new Date().toLocaleTimeString();
+        li.textContent = `[${time}] ${msg}`;
+        logList.prepend(li);
+      }
+
+      function syncModeVisibility() {
+        const mode = cfgMode.value;
+        if (mode === "tuya") {
+          gatewayFields.classList.add("hidden");
+          tuyaFields.classList.remove("hidden");
+        } else if (mode === "local" || mode === "cloud") {
+          tuyaFields.classList.add("hidden");
+          gatewayFields.classList.remove("hidden");
+        } else {
+          tuyaFields.classList.add("hidden");
+          gatewayFields.classList.add("hidden");
+        }
+      }
+
+      // Загрузка сохранённых настроек Tuya
+      function loadTuyaSettings() {
+        const savedMode = localStorage.getItem("kt_custom_mode");
+        const savedUrl = localStorage.getItem("kt_tuya_url") || "";
+        const savedDev = localStorage.getItem("kt_tuya_dev") || "";
+        cfgTuyaUrl.value = savedUrl;
+        cfgTuyaDeviceId.value = savedDev;
+        if (savedMode === "tuya") {
+          cfgMode.value = "tuya";
+          if (connText) connText.textContent = "TUYA LIVE";
+        }
+        syncModeVisibility();
+      }
+
+      cfgMode.addEventListener("change", syncModeVisibility);
+
+      saveBtn.addEventListener("click", () => {
+        const mode = cfgMode.value;
+        localStorage.setItem("kt_custom_mode", mode);
+        localStorage.setItem("kt_tuya_url", cfgTuyaUrl.value.trim().replace(/\/$/, ""));
+        localStorage.setItem("kt_tuya_dev", cfgTuyaDeviceId.value.trim());
+        if (mode === "tuya" && connText) {
+          connText.textContent = "TUYA LIVE";
+          addLog("Tuya Cloud Bridge aktiv (" + (cfgTuyaDeviceId.value.trim() || "Standard-Lampe") + ")");
+        }
+      });
+
+      // Отправка команды на Python-мост
+      async function sendTuyaCommand(commands) {
+        if (localStorage.getItem("kt_custom_mode") !== "tuya") return;
+        const url = localStorage.getItem("kt_tuya_url");
+        const deviceId = localStorage.getItem("kt_tuya_dev");
+        if (!url) {
+          addLog("⚠️ Tuya Bridge URL fehlt in Einstellungen!");
+          return;
+        }
+        try {
+          const res = await fetch(`${url}/api/tuya/control`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ device_id: deviceId, commands: commands })
+          });
+          const data = await res.json();
+          if (data && data.success) {
+            addLog("✅ Tuya Befehl ausgeführt");
+          } else {
+            addLog("⚠️ Tuya Antwort: " + JSON.stringify(data));
+          }
+        } catch (err) {
+          addLog("❌ Bridge Fehler: " + err.message);
+        }
+      }
+
+      // Переключатель Вкл / Выкл
+      lightToggle.addEventListener("change", () => {
+        sendTuyaCommand([{ code: "switch_led", value: lightToggle.checked }]);
+      });
+
+      // Ползунок яркости (в Tuya стандарт шкалы 10..1000)
+      let dimTimer = null;
+      dimmerSlider.addEventListener("change", () => {
+        clearTimeout(dimTimer);
+        dimTimer = setTimeout(() => {
+          const pct = parseInt(dimmerSlider.value, 10);
+          const tuyaVal = Math.round(pct * 10);
+          sendTuyaCommand([{ code: "bright_value_v2", value: tuyaVal }]);
+        }, 200);
+      });
+
+      window.addEventListener("DOMContentLoaded", loadTuyaSettings);
+    })();
+  </script>
 </body>
 </html>
