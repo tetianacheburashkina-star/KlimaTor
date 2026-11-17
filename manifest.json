@@ -1,0 +1,9 @@
+{
+  "name": "KlimaTor Smart Home",
+  "short_name": "KlimaTor",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b111e",
+  "theme_color": "#0ea5e9",
+  "description": "Smart Home Control Panel by chebur.shop"
+}
